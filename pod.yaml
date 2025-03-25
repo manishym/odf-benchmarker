@@ -9,7 +9,8 @@ spec:
   containers:
     - name: odf-benchmark
       image: quay.io/myathnal/odf-benchmarker:latest
-      command: ["python", "benchmarker.py", "/app/metrics.json"]
+      command: ["python", "benchmarker.py", "--config", "/app/metrics.json"]
+
       volumeMounts:
         - name: metrics-volume
           mountPath: /app/metrics.json
