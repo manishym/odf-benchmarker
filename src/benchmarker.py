@@ -15,7 +15,6 @@ def main():
     args = parser.parse_args()
     with open(args.config) as f:
         config = json.load(f)
-        config = generate_metrics(config)
     print("Running benchmarks with the following configuration:")
     cpu = CPUBenchmarker(config.get("cpu", {}))
     storage = StorageBenchmarker(config.get(
