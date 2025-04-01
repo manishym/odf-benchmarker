@@ -12,7 +12,8 @@ def main():
         description="Run various benchmarks on the system.")
     parser.add_argument("--resources", type=str, required=True,
                         help="Path to the configuration file.")
-    parser.add_argument("--metrics", type=str, required=True,
+    parser.add_argument("--metrics", type=str,
+                        default="metrics.json",
                         help="Path to the configuration file.", default="metrics.json")
     args = parser.parse_args()
     with open(args.resources) as f:
