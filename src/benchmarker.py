@@ -1,7 +1,7 @@
 from network_benchmarker import NetworkBenchmarker
 from cpu_benchmarker import CPUBenchmarker
 from storage_benchmarker import StorageBenchmarker
-from metrics_generator import generate_metrics
+from metrics_generator import generate_node_specific_metrics
 import pandas as pd
 import argparse
 import json
@@ -10,12 +10,23 @@ import json
 def main():
     parser = argparse.ArgumentParser(
         description="Run various benchmarks on the system.")
-    parser.add_argument("--config", type=str, required=True,
+    parser.add_argument("--resources", type=str, required=True,
                         help="Path to the configuration file.")
+    parser.add_argument("--metrics", type=str, required=True,
+                        help="Path to the configuration file.", default="metrics.json")
     args = parser.parse_args()
-    with open(args.config) as f:
-        config = json.load(f)
+    with open(args.resources) as f:
+        resources = json.load(f)
+    with open(args.metrics) as f:
+        metrics = json.load(f)
+
     print("Running benchmarks with the following configuration:")
+    metrics_template = config.get("metrics", {})
+    resources = config.get("resources", {})
+    print("Metrics:", metrics)
+    print("Resources:", resources)
+    node = os.environ.get("NODE_NAME", "")
+    metrics = generate_node_specific_metrics(metrics_template, resources, node)
     cpu = CPUBenchmarker(config.get("cpu", {}))
     storage = StorageBenchmarker(config.get(
         "storage", {})) if config.get("storage", {}) else None
