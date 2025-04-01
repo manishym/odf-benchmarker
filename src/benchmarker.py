@@ -21,7 +21,7 @@ def main():
         "storage", {})) if config.get("storage", {}) else None
     network = NetworkBenchmarker(config.get("network", {}))
     df = pd.DataFrame()
-    for b in [cpu, storage, network]:
+    for b in [cpu, storage]:
         print("Running", b.__class__.__name__)
         if b is None:
             continue
