@@ -22,7 +22,7 @@ spec:
           volumeMounts:
             - name: benchmark-config
               mountPath: /app/resources.json
-              subPath: resources.json
+              subPath: benchmark.json
           env:
             - name: NODE_NAME
               valueFrom:

@@ -30,7 +30,7 @@
         
         "parameters": [
             {
-                "threads": [1, 2, 4,],
+                "threads": [1, 2, 4],
                 "cpu-max-prime": 100000
                 
             }
