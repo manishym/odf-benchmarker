@@ -19,12 +19,10 @@ def main():
     with open(args.resources) as f:
         resources = json.load(f)
     with open(args.metrics) as f:
-        metrics = json.load(f)
+        metrics_template = json.load(f)
 
     print("Running benchmarks with the following configuration:")
-    metrics_template = config.get("metrics", {})
-    resources = config.get("resources", {})
-    print("Metrics:", metrics)
+    print("Metrics:", metrics_template)
     print("Resources:", resources)
     node = os.environ.get("NODE_NAME", "")
     metrics = generate_node_specific_metrics(metrics_template, resources, node)
