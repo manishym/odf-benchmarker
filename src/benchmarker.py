@@ -26,7 +26,7 @@ def main():
     print("Metrics:", metrics_template)
     print("Resources:", resources)
     node = os.environ.get("NODE_NAME", "")
-    metrics = generate_node_specific_metrics(metrics_template, resources, node)
+    config = generate_node_specific_metrics(metrics_template, resources, node)
     cpu = CPUBenchmarker(config.get("cpu", {}))
     storage = StorageBenchmarker(config.get(
         "storage", {})) if config.get("storage", {}) else None
