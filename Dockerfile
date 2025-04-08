@@ -1,4 +1,4 @@
-FROM registry.redhat.io/ubi9/ubi
+FROM quay.io/ubi9/ubi
 
 # Enable AppStream & install Python 3.9 and benchmarking tools
 RUN dnf -y install \
