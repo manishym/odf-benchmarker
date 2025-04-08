@@ -1,25 +1,27 @@
-# Use an official lightweight Python base image
-FROM python:3.9-slim
+FROM registry.redhat.io/ubi9/ubi
 
-# Install benchmarking tools and required utilities
-RUN apt-get update && apt-get install -y \
-    sysbench \
-    hping3 \
+# Enable AppStream & install Python 3.9 and benchmarking tools
+RUN dnf -y install \
+    python3.9 \
+    python3-pip \
     iperf3 \
-    iproute2 \
-    && rm -rf /var/lib/apt/lists/*
+    hping3 \
+    sysbench \
+    procps \
+    && dnf clean all
 
-# Set the working directory inside the container
+# Optional: symlink python -> python3.9 for convenience
+RUN alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+
+# Set working directory
 WORKDIR /app
 
-# Copy the Python benchmark code and dependencies
+# Copy Python benchmark code and dependencies
 COPY src/ /app/
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python packages
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Define the command to run the benchmark script
+# Set default command
 ENTRYPOINT ["python", "benchmarker.py"]
-
-# Allow passing metrics.json as an argument dynamically
-CMD []
+CMD ["--config", "/app/benchmark.json"]
